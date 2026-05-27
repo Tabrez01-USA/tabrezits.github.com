@@ -54,6 +54,61 @@
 
     <footer class="border-t border-gray-800 text-center py-8 text-gray-500 text-sm">
         <p>&copy; 2026 IT Support Global Platform. Built for Service & Learning.</p>
+        <!-- 3.5 IT SUPPORT TICKETING FORM SECTION -->
+    <section id="support-form" class="bg-gray-900 border-t border-gray-800 py-16 px-6">
+        <div class="max-w-3xl mx-auto bg-gray-950 p-8 rounded-xl border border-gray-800 shadow-xl">
+            <h2 class="text-3xl font-bold text-center text-blue-500 mb-2">Submit a Technical Support Ticket</h2>
+            <p class="text-gray-400 text-center mb-8">Describe your infrastructure, software, or network issue. Our global engineering team will review it shortly.</p>
+            
+            <!-- The Form (Update the action URL once you get your free Formspree link) -->
+            <form action="https://formspree.io/f/YOUR_UNIQUE_FORM_ID" method="POST" class="space-y-6">
+                
+                <!-- Contact Info Row -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-300 mb-2">Your Name</label>
+                        <input type="text" name="name" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-300 mb-2">Email Address</label>
+                        <input type="email" name="email" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
+                    </div>
+                </div>
+
+                <!-- Category Dropdown -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Issue Category</label>
+                    <select name="category" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
+                        <option value="">-- Select an option --</option>
+                        <option value="networking">Network & Topology Troubleshooting</option>
+                        <option value="cloud">AWS / Cloud Infrastructure Setup</option>
+                        <option value="os-systems">Operating System / Software Bug</option>
+                        <option value="hardware">Hardware Diagnostics & Maintenance</option>
+                        <option value="other">Other Technical Inquiry</option>
+                    </select>
+                </div>
+
+                <!-- Subject line -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Ticket Subject</label>
+                    <input type="text" name="subject" placeholder="Brief summary of the issue..." required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
+                </div>
+
+                <!-- Detailed Description -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Detailed Description of Problem</label>
+                    <textarea name="message" rows="5" placeholder="Please include any error messages, recent system changes, or troubleshooting steps you already attempted..." required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-right">
+                    <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg hover:shadow-blue-900/50 transition duration-300 cursor-pointer">
+                        Submit Support Ticket
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
     </footer>
 
 </body>
