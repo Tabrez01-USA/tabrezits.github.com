@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Academy Labs & Documentation</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="border-b border-gray-800 bg-gray-900 px-6 py-4 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="text-xl font-bold tracking-wider text-blue-500">
+            <a href="index.html">IT_SUPPORT_GLOBAL</a>
+        </div>
+        <div class="space-x-6">
+            <a href="index.html" class="hover:text-blue-400 transition">Home</a>
+            <a href="index.html#support-form" class="hover:text-blue-400 transition">Submit Ticket</a>
+        </div>
+    </nav>
+
+    <!-- ACADEMY HEADER -->
+    <header class="max-w-7xl mx-auto px-6 py-12">
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-3 text-emerald-400">
+            Service-Learning Lab Hub
+        </h1>
+        <p class="text-gray-400 max-w-2xl text-lg">
+            Review real-world IT documentation, step-by-step infrastructure deployments, and enterprise troubleshooting workflows.
+        </p>
+    </header>
+
+    <!-- MAIN HUB CONTENT (Categorized Grid) -->
+    <main class="max-w-7xl mx-auto px-6 pb-24 grid md:grid-cols-3 gap-8">
+        
+        <!-- Category 1: Network Infrastructure -->
+        <div class="bg-gray-950 p-6 rounded-xl border border-gray-800 shadow-xl flex flex-col justify-between">
+            <div>
+                <div class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">Networking</div>
+                <h2 class="text-xl font-bold mb-3 text-gray-100">Core Network Topology</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    A comprehensive walkthrough detailing core subnetting architectures, DHCP scope planning, and custom DNS routing mappings for secure local area networks.
+                </p>
+            </div>
+            <a href="#" class="inline-block text-center bg-gray-900 hover:bg-gray-800 border border-gray-700 text-sm font-semibold py-2.5 rounded-lg text-blue-400 hover:text-white transition">
+                Start Network Lab
+            </a>
+        </div>
+
+        <!-- Category 2: Cloud Systems (AWS) -->
+        <div class="bg-gray-950 p-6 rounded-xl border border-gray-800 shadow-xl flex flex-col justify-between">
+            <div>
+                <div class="text-xs font-bold text-orange-500 uppercase tracking-wider mb-2">Cloud Computing</div>
+                <h2 class="text-xl font-bold mb-3 text-gray-100">AWS Infrastructure Setup</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Learn to build a secure Virtual Private Cloud (VPC) from scratch, configure internet gateways, and deploy scalable EC2 server instances with tight security groups.
+                </p>
+            </div>
+            <a href="#" class="inline-block text-center bg-gray-900 hover:bg-gray-800 border border-gray-700 text-sm font-semibold py-2.5 rounded-lg text-orange-400 hover:text-white transition">
+                Start Cloud Lab
+            </a>
+        </div>
+
+        <!-- Category 3: Systems Management -->
+        <div class="bg-gray-950 p-6 rounded-xl border border-gray-800 shadow-xl flex flex-col justify-between">
+            <div>
+                <div class="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2">Systems Admin</div>
+                <h2 class="text-xl font-bold mb-3 text-gray-100">OS Deployment & Diagnostics</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Standard operating procedures for managing Active Directory user accounts, mapping network group policies, and handling crash dump diagnostics.
+                </p>
+            </div>
+            <a href="#" class="inline-block text-center bg-gray-900 hover:bg-gray-800 border border-gray-700 text-sm font-semibold py-2.5 rounded-lg text-emerald-400 hover:text-white transition">
+                Start Systems Lab
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800 text-center py-8 text-gray-500 text-sm">
+        <p>&copy; 2026 IT Support Global Platform. Built for Service & Learning.</p>
+    </footer>
+
+</body>
+</html>
