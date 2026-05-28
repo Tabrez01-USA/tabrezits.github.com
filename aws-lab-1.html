@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Lab 1: Deploying a Secure VPC</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="border-b border-gray-800 bg-gray-900 px-6 py-4 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="text-xl font-bold tracking-wider text-blue-500">
+            <a href="index.html">IT_SUPPORT_GLOBAL</a>
+        </div>
+        <div class="space-x-6">
+            <a href="labs.html" class="text-gray-400 hover:text-emerald-400 transition">Back to Labs</a>
+            <a href="index.html#support-form" class="text-gray-400 hover:text-blue-400 transition">Submit Ticket</a>
+        </div>
+    </nav>
+
+    <!-- LAB CONTAINER -->
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Lab Header -->
+        <div class="border-b border-gray-800 pb-6 mb-8">
+            <div class="text-xs font-bold text-orange-500 uppercase tracking-wider mb-2">Cloud Computing • Lab #1</div>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white">AWS Infrastructure Setup</h1>
+            <p class="text-gray-400 mt-2">Objective: Provision a isolated Virtual Private Cloud (VPC) and deploy a public-facing EC2 instance running an Nginx web server.</p>
+        </div>
+
+        <!-- THE MOCK SUPPORT TICKET (The Scenario) -->
+        <div class="bg-amber-950/40 border border-amber-800/60 p-6 rounded-xl mb-10">
+            <div class="flex items-center space-x-2 text-amber-400 font-bold mb-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <span>Incoming Helpdesk Ticket #1042</span>
+            </div>
+            <div class="text-sm text-gray-300 space-y-2">
+                <p><strong>Client:</strong> Vanguard Retail Systems</p>
+                <p><strong>Priority:</strong> Medium</p>
+                <p><strong>Description:</strong> "We need to launch a secure public web application on AWS. It must sit inside its own isolated cloud network with a block size of /16. The server must only accept web traffic on HTTP port 80 and secure shell access on port 22 from our administrator network."</p>
+            </div>
+        </div>
+
+        <!-- STEP-BY-STEP ENGINEERING GUIDE -->
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 flex items-center">
+            <span class="bg-emerald-500 text-gray-950 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+            Step 1: Provision the VPC Network
+        </h2>
+        <div class="pl-10 border-l-2 border-gray-800 pb-8 space-y-4 text-gray-400 leading-relaxed">
+            <p>Log into your AWS Management Console and navigate to the **VPC Dashboard**.</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm">
+                <li>Click <strong>Create VPC</strong>.</li>
+                <li>Select <strong>VPC only</strong>.</li>
+                <li>Name Tag: <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">vanguard-prod-vpc</code></li>
+                <li>IPv4 CIDR block: Enter <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">10.0.0.0/16</code> (This creates a massive pool of 65,536 private IP addresses).</li>
+            </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 flex items-center">
+            <span class="bg-emerald-500 text-gray-950 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+            Step 2: Create a Public Subnet
+        </h2>
+        <div class="pl-10 border-l-2 border-gray-800 pb-8 space-y-4 text-gray-400 leading-relaxed">
+            <p>Now carve out a smaller chunk of your network for the server to live inside.</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm">
+                <li>Go to <strong>Subnets</strong> > click <strong>Create Subnet</strong>.</li>
+                <li>Select your newly created <code class="text-blue-400">vanguard-prod-vpc</code>.</li>
+                <li>Subnet Name: <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">vanguard-public-sn-1a</code></li>
+                <li>IPv4 CIDR block: Enter <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">10.0.1.0/24</code> (Provides 256 internal IP addresses for this single zone).</li>
+            </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 flex items-center">
+            <span class="bg-emerald-500 text-gray-950 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+            Step 3: Attach an Internet Gateway (IGW)
+        </h2>
+        <div class="pl-10 border-l-2 border-gray-800 pb-8 space-y-4 text-gray-400 leading-relaxed">
+            <p>By default, a VPC is entirely cut off from the outside world. To allow clients to load the website, connect an edge gateway.</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm">
+                <li>Go to <strong>Internet Gateways</strong> > <strong>Create internet gateway</strong>.</li>
+                <li>Name it <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">vanguard-igw</code> and hit create.</li>
+                <li>Select your gateway, click the <strong>Actions</strong> dropdown, and choose <strong>Attach to VPC</strong>. Select your VPC.</li>
+            </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 flex items-center">
+            <span class="bg-emerald-500 text-gray-950 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3">4</span>
+            Step 4: Configure Firewall Rules (Security Group)
+        </h2>
+        <div class="pl-10 border-l-2 border-gray-800 pb-8 space-y-4 text-gray-400 leading-relaxed">
+            <p>Let's enforce the precise access requests detailed in the client's support ticket.</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm">
+                <li>Go to <strong>Security Groups</strong> > <strong>Create security group</strong>.</li>
+                <li>Add an <strong>Inbound Rule</strong>: Type = HTTP (Port 80), Source = <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">0.0.0.0/0</code> (Allows web visitors from anywhere worldwide).</li>
+                <li>Add a second <strong>Inbound Rule</strong>: Type = SSH (Port 22), Source = Select **My IP** or input the admin range to lock down console commands.</li>
+            </ul>
+        </div>
+
+        <!-- LAB VERIFICATION/COMPLETION -->
+        <div class="mt-12 bg-gray-950 border border-emerald-800/40 p-8 rounded-xl text-center">
+            <h3 class="text-xl font-bold text-emerald-400 mb-2">🎉 Verification Checklist</h3>
+            <p class="text-sm text-gray-400 mb-6">Once you spin up an EC2 instance in this subnet using your security group, visit its public IP address in a clean browser tab. If you see the welcome screen, Ticket #1042 is resolved!</p>
+            <button onclick="alert('Great job! Document this network topology build in your portfolio notes.')" class="bg-emerald-600 hover:bg-emerald-700 text-gray-950 font-bold px-8 py-3 rounded-lg shadow-lg cursor-pointer transition">
+                Mark Lab as Completed
+            </button>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800 text-center py-8 text-gray-500 text-sm">
+        <p>&copy; 2026 IT Support Global Platform. Built for Service & Learning.</p>
+    </footer>
+
+</body>
+</html>
