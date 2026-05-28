@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Networking Lab 1: Core Subnetting & DHCP Scope Planning</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="border-b border-gray-800 bg-gray-900 px-6 py-4 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="text-xl font-bold tracking-wider text-blue-500">
+            <a href="index.html">IT_SUPPORT_GLOBAL</a>
+        </div>
+        <div class="space-x-6">
+            <a href="labs.html" class="text-gray-400 hover:text-blue-400 transition">Back to Labs</a>
+            <a href="index.html#support-form" class="text-gray-400 hover:text-blue-400 transition">Submit Ticket</a>
+        </div>
+    </nav>
+
+    <!-- LAB CONTAINER -->
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Lab Header -->
+        <div class="border-b border-gray-800 pb-6 mb-8">
+            <div class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">Network Architecture • Lab #1</div>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white">Subnetting & Local DHCP Architecture</h1>
+            <p class="text-gray-400 mt-2">Objective: Re-engineer a collapsing Class C local area network by implementing logical subnet allocation and resilient DHCP address clustering.</p>
+        </div>
+
+        <!-- THE MOCK SUPPORT TICKET (The Scenario) -->
+        <div class="bg-amber-950/40 border border-amber-800/60 p-6 rounded-xl mb-10">
+            <div class="flex items-center space-x-2 text-amber-400 font-bold mb-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <span>Incoming Helpdesk Ticket #2087</span>
+            </div>
+            <div class="text-sm text-gray-300 space-y-2">
+                <p><strong>Client:</strong> Horizon Logistics Corp</p>
+                <p><strong>Priority:</strong> High / Critical</p>
+                <p><strong>Description:</strong> "Our main distribution center is experiencing massive network drops. We originally deployed a simple flat home-style network using 192.168.1.X. We just scaled up our wireless scanners and warehouse inventory workstations from 30 devices to 180 devices. New devices are failing to get an IP address entirely, and static servers are dropping connections due to IP collisions."</p>
+            </div>
+        </div>
+
+        <!-- STEP-BY-STEP ENGINEERING GUIDE -->
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 flex items-center">
+            <span class="bg-blue-500 text-gray-950 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+            Step 1: Calculate the New Subnet Mask (CIDR Conversion)
+        </h2>
+        <div class="pl-10 border-l-2 border-gray-800 pb-8 space-y-4 text-gray-400 leading-relaxed">
+            <p>The client's original network mask was a standard Class C block (<code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">255.255.255.0</code> or <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">/24</code>), which caps out at 254 usable address allocations. Because they have reached 180 devices and are expanding rapidly, they have safely crossed into critical overhead territory.</p>
+            <p>To give them room to expand to up to 500 total host nodes without rebuilding their structural baseline again, we will shift their mask down to a **Supernet block** (<code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">/23</code>).</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm text-gray-300">
+                <li><strong>New Network Block:</strong> <code class="text-blue-400">192.168.0.0/23</code></li>
+                <li><strong>New Subnet Mask:</strong> <code class="text-blue-400">255.255.254.0</code></li>
+                <li><strong>Total Usable Host Pool:</strong> 510 unique network addresses spanning from 192.168.0.1 through 192.168.1.254.</li>
+            </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 flex items-center">
+            <span class="bg-blue-500 text-gray-950 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+            Step 2: Establish the Topology IP Schema
+        </h2>
+        <div class="pl-10 border-l-2 border-gray-800 pb-8 space-y-4 text-gray-400 leading-relaxed">
+            <p>To stop rogue wireless hardware or workstations from taking over critical infrastructure addresses, we must divide our brand new address pool into strict engineering logical blocks:</p>
+            
+            <div class="overflow-x-auto my-4">
+                <table class="w-full text-left text-sm bg-gray-950 border border-gray-800 rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-gray-900 border-b border-gray-800 text-blue-400 font-bold">
+                            <th class="p-3">Device Allocation Category</th>
+                            <th class="p-3">IP Address Range Scope</th>
+                            <th class="p-3">Purpose / Usage Type</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 text-gray-300">
+                        <tr>
+                            <td class="p-3 font-semibold">Core Gateways</td>
+                            <td class="p-3">192.168.0.1</td>
+                            <td class="p-3">Main Core Router Edge Interface</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold">Managed Switches</td>
+                            <td class="p-3">192.168.0.2 - 192.168.0.20</td>
+                            <td class="p-3">Layer 2/3 Backplane Switching hardware</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold">Static Production Servers</td>
+                            <td class="p-3">192.168.0.21 - 192.168.0.50</td>
+                            <td class="p-3">Domain Controllers, Local Print Management</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold">DHCP Dynamic Host Scope</td>
+                            <td class="p-3">192.168.0.51 - 192.168.1.254</td>
+                            <td class="p-3">Dynamic Range (Scanners, Handhelds, PCs)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-100 mb-6 flex items-center">
+            <span class="bg-blue-500 text-gray-950 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+            Step 3: Program the Core DHCP Server Scope
+        </h2>
+        <div class="pl-10 border-l-2 border-gray-800 pb-8 space-y-4 text-gray-400 leading-relaxed">
+            <p>Access your primary network management server or core router console to provision the active pool that fixes Horizon Logistics' address exhaustion crisis.</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm text-gray-300">
+                <li>Configure the Address Range Start block to <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">192.168.0.51</code> and set the terminal scope to <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">192.168.1.254</code>.</li>
+                <li>Set the default routing gateway interface destination exactly to <code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">192.168.0.1</code>.</li>
+                <li>Map the primary network DNS pointer to Google’s high-performance public arrays (<code class="bg-gray-800 px-1.5 py-0.5 rounded text-gray-200">8.8.8.8</code>) or your localized domain server cluster address.</li>
+                <li><strong>CRITICAL STEP:</strong> Change the dynamic reservation lease time limit downward to <strong>4 Hours</strong> (instead of the standard 8 Days). Because warehouse scanners drop off and turn on constantly as shifts cycle out, a tight lease duration guarantees that inactive devices release their slots back into the active pool immediately instead of locking them up!</li>
+            </ul>
+        </div>
+
+        <!-- LAB VERIFICATION/COMPLETION -->
+        <div class="mt-12 bg-gray-950 border border-blue-800/40 p-8 rounded-xl text-center">
+            <h3 class="text-xl font-bold text-blue-400 mb-2">🎉 Network Verification Checklist</h3>
+            <p class="text-sm text-gray-400 mb-6">Open an elevated command prompt terminal window on an inventory workstation node. Type <code class="bg-gray-900 px-2 py-1 text-blue-300 rounded">ipconfig /release</code> followed cleanly by <code class="bg-gray-900 px-2 py-1 text-blue-300 rounded">ipconfig /renew</code>. If the host successfully receives a fast allocation mapping above .50 with a mask reading 255.255.254.0, Ticket #2087 is officially closed!</p>
+            <button onclick="alert('Network engineering training verified! Your topology routing map is completely functional.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg cursor-pointer transition">
+                Mark Networking Lab as Completed
+            </button>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800 text-center py-8 text-gray-500 text-sm">
+        <p>&copy; 2026 IT Support Global Platform. Built for Service & Learning.</p>
+    </footer>
+
+</body>
+</html>
