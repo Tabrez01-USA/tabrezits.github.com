@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global IT Support & Learning Platform</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans">
-https://formspree.io/f/xvzydbao
-Save (commit) your changes.
+
+    <!-- 1. NAVIGATION BAR (Top menu - Updated to link to labs.html) -->
     <nav class="border-b border-gray-800 bg-gray-900 px-6 py-4 flex justify-between items-center max-w-7xl mx-auto">
         <div class="text-xl font-bold tracking-wider text-blue-500">IT_SUPPORT_GLOBAL</div>
         <div class="space-x-6">
             <a href="#support" class="hover:text-blue-400 transition">Get Support</a>
-            <a href="#academy" class="hover:text-blue-400 transition">Learning Academy</a>
-            <a href="#about" class="hover:text-blue-400 transition">About</a>
+            <a href="labs.html" class="hover:text-blue-400 transition">Learning Academy</a>
+            <a href="#support-form" class="hover:text-blue-400 transition">Submit Ticket</a>
         </div>
     </nav>
 
+    <!-- 2. HERO SECTION -->
     <header class="max-w-7xl mx-auto px-6 py-20 text-center">
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
             Global IT Solutions Meet <span class="text-blue-500">Hands-On Excellence</span>
@@ -26,16 +28,18 @@ Save (commit) your changes.
             Providing reliable, worldwide remote technical assistance while empowering the next generation of IT professionals through real-world service learning.
         </p>
 
+        <!-- Twin Call-to-Action Buttons (Updated Button 2 to link to labs.html) -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <a href="#support" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-blue-900/50 transition duration-300 text-center">
+            <a href="#support-form" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-blue-900/50 transition duration-300 text-center">
                 Need IT Support? Get Help Now
             </a>
-            <a href="#academy" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white font-semibold px-8 py-4 rounded-lg hover:border-blue-500 transition duration-300 text-center">
+            <a href="labs.html" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white font-semibold px-8 py-4 rounded-lg hover:border-blue-500 transition duration-300 text-center">
                 Explore Learning Academy
             </a>
         </div>
     </header>
 
+    <!-- 3. SERVICES OVERVIEW -->
     <section class="bg-gray-950 border-t border-gray-800 py-16 px-6">
         <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
             <div id="support">
@@ -53,18 +57,13 @@ Save (commit) your changes.
         </div>
     </section>
 
-    <footer class="border-t border-gray-800 text-center py-8 text-gray-500 text-sm">
-        <p>&copy; 2026 IT Support Global Platform. Built for Service & Learning.</p>
-        <!-- 3.5 IT SUPPORT TICKETING FORM SECTION -->
+    <!-- 4. IT SUPPORT TICKETING FORM SECTION -->
     <section id="support-form" class="bg-gray-900 border-t border-gray-800 py-16 px-6">
         <div class="max-w-3xl mx-auto bg-gray-950 p-8 rounded-xl border border-gray-800 shadow-xl">
             <h2 class="text-3xl font-bold text-center text-blue-500 mb-2">Submit a Technical Support Ticket</h2>
             <p class="text-gray-400 text-center mb-8">Describe your infrastructure, software, or network issue. Our global engineering team will review it shortly.</p>
             
-            <!-- The Form (Update the action URL once you get your free Formspree link) -->
             <form action="https://formspree.io/f/YOUR_UNIQUE_FORM_ID" method="POST" class="space-y-6">
-                
-                <!-- Contact Info Row -->
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-gray-300 mb-2">Your Name</label>
@@ -76,7 +75,6 @@ Save (commit) your changes.
                     </div>
                 </div>
 
-                <!-- Category Dropdown -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-300 mb-2">Issue Category</label>
                     <select name="category" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
@@ -89,19 +87,16 @@ Save (commit) your changes.
                     </select>
                 </div>
 
-                <!-- Subject line -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-300 mb-2">Ticket Subject</label>
                     <input type="text" name="subject" placeholder="Brief summary of the issue..." required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
                 </div>
 
-                <!-- Detailed Description -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-300 mb-2">Detailed Description of Problem</label>
                     <textarea name="message" rows="5" placeholder="Please include any error messages, recent system changes, or troubleshooting steps you already attempted..." required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition"></textarea>
                 </div>
 
-                <!-- Submit Button -->
                 <div class="text-right">
                     <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg hover:shadow-blue-900/50 transition duration-300 cursor-pointer">
                         Submit Support Ticket
@@ -110,6 +105,10 @@ Save (commit) your changes.
             </form>
         </div>
     </section>
+
+    <!-- 5. FOOTER -->
+    <footer class="border-t border-gray-800 text-center py-8 text-gray-500 text-sm">
+        <p>&copy; 2026 IT Support Global Platform. Built for Service & Learning.</p>
     </footer>
 
 </body>
